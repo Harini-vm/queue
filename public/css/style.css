@@ -1,0 +1,692 @@
+/* ============================================================
+   Queue Cure — shared LIGHT theme
+   Used by: landing (/), display (/display), patient (/patient).
+   Receptionist (/receptionist) has its own receptionist.css.
+   ============================================================ */
+:root {
+  --bg:           #ffffff;
+  --surface-alt:  #f8fafc;
+  --border:       #e2e8f0;
+  --border-strong:#cbd5e1;
+  --text:         #1e293b;
+  --text-muted:   #64748b;
+  --text-faint:   #94a3b8;
+  --accent:       #2563eb;
+  --accent-strong:#1d4ed8;
+  --accent-soft:  #dbeafe;
+  --accent-softer:#eff6ff;
+  --teal:         #0ea5e9;
+  --success:      #10b981;
+  --success-soft: #d1fae5;
+  --success-bg:   #f0fdf4;
+  --warning:      #d97706;
+  --danger:       #dc2626;
+  --shadow-sm:    0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow:       0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-lg:    0 12px 40px rgba(15, 23, 42, 0.08);
+  --radius:       14px;
+  --radius-sm:    8px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Shared Blueprint Grid background — same as the receptionist screen
+   so every page reads as part of one product. */
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.055) 1px, transparent 1px),
+    radial-gradient(ellipse 900px 600px at 80% 0%, rgba(219, 234, 254, 0.5), transparent 60%);
+  background-size: 32px 32px, 32px 32px, 100% 100%;
+  background-position: -1px -1px, -1px -1px, 0 0;
+}
+
+a { color: var(--accent); text-decoration: none; font-weight: 500; }
+a:hover { color: var(--accent-strong); }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar (shared) ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-weight: 700; font-size: 17px; color: var(--text);
+}
+.brand .logo {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 16px;
+}
+.brand-sub { color: var(--text-muted); font-weight: 500; margin-left: 4px; }
+
+/* ---------- Sync pill (shared) ---------- */
+.sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--success-bg);
+  border: 1px solid var(--success-soft);
+  color: #047857;
+  font-size: 13px;
+  font-weight: 600;
+}
+.sync-pill .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+.sync-pill.offline {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+.sync-pill.offline .dot {
+  background: var(--danger);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+}
+
+/* ---------- Generic card (shared) ---------- */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ============================================================
+   LANDING (/)
+   ============================================================ */
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+.hero {
+  padding: 80px 24px 40px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(40px, 6vw, 68px);
+  margin: 0 0 18px;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: var(--text);
+}
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--accent), var(--teal));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  color: var(--text-muted);
+  font-size: 18px;
+  max-width: 640px;
+  margin: 0 auto 44px;
+  line-height: 1.6;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.role-card {
+  display: block;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  text-align: left;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.role-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+.role-card .icon { font-size: 32px; margin-bottom: 10px; }
+.role-card h3 { margin: 8px 0; font-size: 20px; color: var(--text); }
+.role-card p { color: var(--text-muted); margin: 0; font-size: 14px; line-height: 1.5; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   WAITING ROOM DISPLAY (/display)
+   Hospital-lobby kiosk aesthetic: pure white surfaces, big bold
+   medical-blue numbers, soft glow for depth without darkening.
+   ============================================================ */
+.display-wrap {
+  min-height: 100vh;
+  padding: 32px 5vw 24px;
+  display: flex; flex-direction: column;
+}
+.display-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px;
+}
+.display-header .clinic-name {
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.display-now {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 4vw 5vw;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.display-now::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 18% 50%, rgba(37, 99, 235, 0.08), transparent 70%),
+    radial-gradient(ellipse 500px 350px at 85% 50%, rgba(14, 165, 233, 0.06), transparent 70%);
+  pointer-events: none;
+}
+.display-now > * { position: relative; z-index: 1; }
+
+@media (max-width: 800px) {
+  .display-now { grid-template-columns: 1fr; text-align: center; }
+}
+
+.display-now .label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin-bottom: 14px;
+}
+
+.display-now .token-mega {
+  font-size: clamp(120px, 22vw, 280px);
+  font-weight: 800;
+  line-height: 0.9;
+  color: var(--accent);
+  text-shadow:
+    0 4px 28px rgba(37, 99, 235, 0.22),
+    0 0 60px rgba(37, 99, 235, 0.10);
+  display: inline-block;
+  will-change: transform, opacity;
+  letter-spacing: -5px;
+}
+/* Muted empty-state — when there's no serving patient, drop the
+   color + glow so the em-dash placeholder reads as "calibrating"
+   rather than a misrendered blue bar. */
+.display-now .token-mega.empty {
+  color: var(--text-faint);
+  text-shadow: none;
+  letter-spacing: -2px;
+  font-size: clamp(80px, 14vw, 160px);
+}
+
+.display-now .name-big {
+  font-size: clamp(28px, 3.6vw, 48px);
+  font-weight: 600;
+  margin-top: 12px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.display-now .ahead {
+  font-size: clamp(72px, 10vw, 132px);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -3px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.display-now .eta-line {
+  font-size: clamp(18px, 2vw, 26px);
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* Bottom row: Up-next chips share space with the QR card on the right. */
+.display-bottom {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .display-bottom { grid-template-columns: 1fr; } }
+
+.up-next-wrap { min-width: 0; }
+.up-next {
+  display: flex; gap: 14px; overflow-x: auto;
+  padding: 4px 0 12px;
+  scrollbar-width: thin;
+}
+.up-next .chip {
+  flex: 0 0 auto;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 18px 24px;
+  border-radius: 16px;
+  min-width: 150px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.up-next .chip .t {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+.up-next .chip .n {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 8px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.display-footer {
+  margin-top: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--text-muted); font-size: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  font-weight: 500;
+}
+
+/* ---------- QR card (the "scan to track" magic moment) ---------- */
+.qr-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.qr-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 320px 220px at 100% 0%, rgba(37, 99, 235, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.qr-text { position: relative; z-index: 1; flex: 1; }
+.qr-eyebrow {
+  font-size: 11px; font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase; letter-spacing: 1.4px;
+  margin-bottom: 6px;
+}
+.qr-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+.qr-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-weight: 500;
+}
+.qr-img {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: white;
+  padding: 6px;
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+/* Giant token slide animation — visual proof of live sync. */
+@keyframes tokenExit {
+  0%   { transform: translateY(0);     opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+@keyframes tokenEnter {
+  0%   { transform: translateY(60px);  opacity: 0; }
+  60%  { transform: translateY(-6px);  opacity: 1; }
+  100% { transform: translateY(0);     opacity: 1; }
+}
+.token-mega.exiting  { animation: tokenExit  220ms ease-in 1 forwards; }
+.token-mega.entering { animation: tokenEnter 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 1; }
+
+/* ============================================================
+   PATIENT MOBILE VIEW (/patient)
+   ============================================================ */
+.patient-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.patient-hero {
+  text-align: center;
+  padding: 24px 16px 8px;
+}
+.patient-hero .brand { justify-content: center; }
+.patient-hero h1 {
+  margin: 18px 0 8px;
+  font-size: 28px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+.patient-hero p {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 15px;
+}
+
+.lookup-form {
+  display: flex; gap: 8px; margin: 24px 0 8px;
+}
+.lookup-form input {
+  flex: 1;
+  font-size: 18px;
+  text-align: center;
+  min-height: 48px;
+  padding: 12px 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  outline: none;
+  font-family: inherit;
+  font-weight: 600;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.lookup-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+.lookup-form .btn {
+  background: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
+  padding: 12px 22px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  min-height: 48px;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.lookup-form .btn:hover { background: var(--accent-strong); }
+
+.patient-status-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  margin-top: 16px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.patient-status-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 400px 280px at 50% 0%, rgba(37, 99, 235, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.patient-status-card > * { position: relative; z-index: 1; }
+.patient-status-card .label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 8px;
+}
+.patient-status-card .your-token {
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -3px;
+  text-shadow: 0 4px 20px rgba(37, 99, 235, 0.18);
+}
+.patient-status-card .your-name {
+  color: var(--text-muted);
+  margin: 12px 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.status-row .v {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.status-row .k {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.status-banner {
+  margin-top: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.status-banner.next {
+  background: rgba(94, 177, 255, 0.10);
+  border: 2px solid #5EB1FF;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 0 24px rgba(94, 177, 255, 0.18);
+}
+.status-banner.now {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.32);
+}
+
+.helper {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.5;
+  text-align: center;
+}
+.helper.error { color: var(--danger); }
+
+/* ============================================================
+   Box Animations — entrance + prominence
+   Goal: every page reads as "this is alive" the moment it loads,
+   then the eye gets pulled to the one element that matters most.
+   Snappy 400–600ms one-shots for boxes; two intentional infinite
+   pulses (display NOW SERVING + patient YOUR TURN) — only where
+   the pulse carries real meaning.
+   ============================================================ */
+
+@keyframes boxIn {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.985); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ---- Landing ---- */
+.hero h1 { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.hero p  { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 80ms both; }
+.role-card { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.role-card:nth-child(1) { animation-delay: 160ms; }
+.role-card:nth-child(2) { animation-delay: 240ms; }
+.role-card:nth-child(3) { animation-delay: 320ms; }
+.grid-2 .card { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.grid-2 .card:nth-child(1) { animation-delay: 400ms; }
+.grid-2 .card:nth-child(2) { animation-delay: 460ms; }
+
+/* Stronger hover lift on landing tiles */
+.role-card {
+  transition:
+    transform   0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow  0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.22s;
+}
+.role-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+.role-card:active { transform: translateY(-2px) scale(1); }
+
+.card {
+  transition:
+    transform   0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow  0.22s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* ---- Display ---- */
+.display-header { animation: boxIn 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.display-now    { animation: boxIn 600ms cubic-bezier(0.22, 0.61, 0.36, 1) 80ms both; }
+.up-next .chip  { animation: boxIn 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.qr-card        { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 280ms both; }
+.up-next .chip:nth-child(1) { animation-delay: 240ms; }
+.up-next .chip:nth-child(2) { animation-delay: 300ms; }
+.up-next .chip:nth-child(3) { animation-delay: 360ms; }
+.up-next .chip:nth-child(4) { animation-delay: 420ms; }
+.up-next .chip:nth-child(5) { animation-delay: 480ms; }
+.up-next .chip:nth-child(6) { animation-delay: 540ms; }
+
+/* Display "Now Serving" panel — continuous prominence pulse.
+   Soft blue ring that breathes once every ~3.6s. Slow enough to
+   feel ambient, not a distraction; bright enough to pull a glance
+   from across a waiting room. */
+@keyframes nowPanelPulse {
+  0%, 100% { box-shadow: var(--shadow),
+                         0 0 0 0   rgba(37, 99, 235, 0); }
+  50%      { box-shadow: var(--shadow),
+                         0 0 0 8px rgba(37, 99, 235, 0.10); }
+}
+.display-now {
+  animation:
+    boxIn 600ms cubic-bezier(0.22, 0.61, 0.36, 1) 80ms both,
+    nowPanelPulse 3.6s ease-in-out infinite 800ms;
+}
+
+/* ---- Patient ---- */
+.patient-hero        { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.lookup-form         { animation: boxIn 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 120ms both; }
+.patient-status-card { animation: boxIn 600ms cubic-bezier(0.22, 0.61, 0.36, 1) 200ms both; }
+
+/* "Your turn" — urgent pulse. The whole purpose of the patient
+   screen is this one moment; pulse hard until they look up. */
+@keyframes urgentPulse {
+  0%, 100% { box-shadow: 0 8px 28px rgba(37, 99, 235, 0.32),
+                         0 0 0 0   rgba(37, 99, 235, 0); }
+  50%      { box-shadow: 0 8px 28px rgba(37, 99, 235, 0.55),
+                         0 0 0 10px rgba(37, 99, 235, 0.10); }
+}
+.status-banner.now {
+  animation: urgentPulse 1.6s ease-in-out infinite;
+}
+
+/* "Next up" — gentler pulse on the electric-blue border, just enough
+   to nudge the patient that their turn is imminent. */
+@keyframes nextPulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(94, 177, 255, 0.18); }
+  50%      { box-shadow: 0 0 32px rgba(94, 177, 255, 0.35); }
+}
+.status-banner.next {
+  animation: nextPulse 2.4s ease-in-out infinite;
+}
+
+/* Your-token number gets a one-shot scale pop when it first renders. */
+@keyframes tokenPop {
+  0%   { opacity: 0; transform: scale(0.7); }
+  60%  { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.patient-status-card .your-token {
+  display: inline-block;
+  animation: tokenPop 540ms cubic-bezier(0.34, 1.56, 0.64, 1) 260ms both;
+}

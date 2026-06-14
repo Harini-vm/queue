@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your turn · Queue Cure</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="patient-wrap">
+    <header class="patient-hero">
+      <div class="brand">
+        <div class="logo">Q</div>
+        <span>Queue Cure</span>
+      </div>
+      <h1>Track your turn</h1>
+      <p>Enter the token number you were given at reception.</p>
+    </header>
+
+    <form class="lookup-form" id="lookupForm" autocomplete="off">
+      <input type="number" id="tokenInput" placeholder="Token #" min="1" required />
+      <button class="btn" type="submit">Track</button>
+    </form>
+
+    <div id="errorMsg" class="helper error"></div>
+
+    <section id="statusCard" class="patient-status-card" style="display:none;">
+      <div class="label">Your token</div>
+      <div class="your-token" id="yourToken">—</div>
+      <div class="your-name" id="yourName"></div>
+
+      <div class="status-row">
+        <div>
+          <div class="v" id="aheadCount">0</div>
+          <div class="k">Ahead of you</div>
+        </div>
+        <div>
+          <div class="v" id="etaMinutes">—</div>
+          <div class="k">Approx wait</div>
+        </div>
+      </div>
+
+      <div class="status-banner" id="statusBanner">Looking up…</div>
+    </section>
+
+    <div style="margin-top: auto; padding-top: 24px; display:flex; justify-content:center;">
+      <div class="sync-pill offline" id="conn">
+        <span class="dot"></span>
+        <span id="connText">Connecting…</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/patient.js"></script>
+</body>
+</html>

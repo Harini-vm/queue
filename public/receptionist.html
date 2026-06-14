@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Receptionist · Queue Cure</title>
+  <link rel="stylesheet" href="/css/receptionist.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">Q</div>
+      <span>Queue Cure</span>
+      <span class="brand-sub" id="clinicName"></span>
+    </div>
+    <div class="sync-pill offline" id="conn">
+      <span class="dot"></span>
+      <span id="connText">Connecting…</span>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <!-- =================== LEFT COLUMN =================== -->
+    <aside class="left-col">
+
+      <!-- Issue Token -->
+      <section class="card">
+        <h2>Issue Token</h2>
+        <p class="subtitle">Type the patient's name and press Enter — done in under 5 seconds.</p>
+
+        <form id="addForm" autocomplete="off">
+          <div class="field">
+            <label class="label" for="nameInput">Patient Name</label>
+            <input id="nameInput" type="text" placeholder="e.g. Asha Patel" required />
+          </div>
+          <div class="field">
+            <label class="label" for="phoneInput">
+              Phone Number <span class="opt">(optional)</span>
+            </label>
+            <input id="phoneInput" type="tel" placeholder="+91 …" />
+          </div>
+          <button class="btn btn-primary btn-block btn-tall" type="submit" style="margin-top: 18px;">
+            Issue Token <span class="kbd">Enter</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Clinic Cadence -->
+      <section class="card">
+        <h2>Clinic Cadence</h2>
+        <p class="subtitle">Average consultation time. Used as a fallback until real consultations are recorded today.</p>
+        <div class="stepper">
+          <button type="button" id="cadenceMinus" aria-label="Decrease minutes">−</button>
+          <input id="cadenceInput" type="number" min="1" max="60" value="8" />
+          <button type="button" id="cadencePlus" aria-label="Increase minutes">+</button>
+        </div>
+        <div class="cadence-meta">
+          <span>Minutes per patient</span>
+          <span class="source" id="cadenceSource">—</span>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- =================== RIGHT COLUMN =================== -->
+    <section class="queue-col">
+
+      <!-- State Controller Banner: light tile anchoring the dark hero button -->
+      <div class="hero-tile">
+        <button class="hero-call" id="btnCallNext" disabled>
+          <div class="hero-left">
+            <span class="now-tag" id="nowTag" style="display:none;">NOW SERVING</span>
+            <span id="heroLabel">CALL NEXT PATIENT</span>
+          </div>
+          <div class="hero-right">
+            <span class="serving-name" id="servingName"></span>
+            <span class="kbd">Spacebar</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Queue table -->
+      <div class="card queue-card">
+        <div class="queue-header">
+          <div>
+            <h2>Active Queue</h2>
+            <p class="subtitle">Patients currently waiting, in order of arrival.</p>
+          </div>
+          <div class="queue-stats">
+            <span class="stat"><strong id="statWaiting">0</strong>waiting</span>
+            <span class="stat"><strong id="statDone">0</strong>seen</span>
+            <span class="stat"><strong id="statSkipped">0</strong>skipped</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="queue" id="queueTable">
+            <thead>
+              <tr>
+                <th style="width: 110px;">Token</th>
+                <th>Patient</th>
+                <th style="width: 130px;">Checked In</th>
+                <th style="width: 120px;">Status</th>
+                <th style="width: 180px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="queueBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">○</div>
+            <div class="empty-title">No patients in the queue</div>
+            <div>Issue a token on the left to add the first patient.</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- QR Slip — appears bottom-right after an Issue Token action.
+       Receptionist turns the screen so the patient can scan it.
+       Non-blocking: the Name input stays focused for the next add. -->
+  <div class="qr-slip" id="qrSlip" hidden>
+    <button class="qr-slip-close" id="qrSlipClose" type="button" aria-label="Close">×</button>
+    <div class="qr-slip-eyebrow">TOKEN ISSUED</div>
+    <div class="qr-slip-row">
+      <div>
+        <div class="qr-slip-token" id="qrSlipToken">#—</div>
+        <div class="qr-slip-name" id="qrSlipName"></div>
+      </div>
+      <img class="qr-slip-img" id="qrSlipImg" src="" alt="Patient's personal tracking QR" />
+    </div>
+    <div class="qr-slip-hint">
+      Show the screen — one scan, no typing.
+      <span class="qr-slip-countdown" id="qrSlipCountdown"></span>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/receptionist.js"></script>
+</body>
+</html>

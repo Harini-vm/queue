@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Waiting Room · Queue Cure</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="display-wrap">
+    <div class="display-header">
+      <div class="clinic-name" id="clinicName">Queue Cure Clinic</div>
+      <div class="sync-pill offline" id="conn">
+        <span class="dot"></span>
+        <span id="connText">Connecting…</span>
+      </div>
+    </div>
+
+    <div class="display-now">
+      <div>
+        <div class="label">Now serving</div>
+        <div class="token-mega" id="servingToken">—</div>
+        <div class="name-big" id="servingName">Waiting for first patient</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="label">Patients ahead</div>
+        <div class="ahead" id="waitingCount">0</div>
+        <div class="eta-line" id="etaLine">Average wait — calibrating</div>
+      </div>
+    </div>
+
+    <div class="display-bottom">
+      <div class="up-next-wrap">
+        <div class="label" style="margin-bottom:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.8px; font-size:14px;">Up next</div>
+        <div class="up-next" id="upNext"></div>
+      </div>
+
+      <aside class="qr-card" aria-label="Scan to track your token">
+        <div class="qr-text">
+          <div class="qr-eyebrow">SCAN TO TRACK</div>
+          <div class="qr-title">Your token<br/>on your phone</div>
+          <div class="qr-sub">No app · no signup</div>
+        </div>
+        <img class="qr-img" src="/api/qr/patient" alt="QR code linking to patient view" />
+      </aside>
+    </div>
+
+    <div class="display-footer">
+      <div id="dataSource">Wait time source: —</div>
+      <div id="clock"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/display.js"></script>
+</body>
+</html>

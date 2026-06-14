@@ -3,6 +3,18 @@
 > Built for the **Queue Cure '26** hackathon on Wooble.
 > Stack: **Node.js · Express · MongoDB · Socket.IO · Vanilla JS · QRCode**
 
+### 🟢 Live demo → **https://queue-1-eg77.onrender.com**
+
+Open these on any device to see it running:
+
+- **Receptionist** — https://queue-1-eg77.onrender.com/receptionist
+- **Waiting-room display** — https://queue-1-eg77.onrender.com/display
+- **Patient phone** — https://queue-1-eg77.onrender.com/patient
+
+> ⚠️ Hosted on Render's free tier — first request after 15 min of inactivity takes ~30 seconds to wake up. After that, response times are normal. **Warm it up by clicking the link once before any demo.**
+
+---
+
 A neighbourhood clinic runs on paper tokens and shouting. A patient walks in, gets a paper slip, then sits for two hours with zero information. This project replaces all of that with three screens that stay in lockstep over a live socket — **and zero paper**, because the QR is shown on the receptionist's existing monitor instead of printed.
 
 | Stat | What it means |
@@ -171,7 +183,7 @@ queue-cure/
 
 ## Submission checklist (Wooble portfolio)
 
-- ✅ **Working prototype link / demo video** — host on Render / Railway / Fly.io, or record screen with the three screens visible
+- ✅ **Working prototype link** — https://queue-1-eg77.onrender.com (live on Render free tier)
 - ✅ **GitHub repo with README** — this file
 - ✅ **Socket event diagram** — [`docs/SOCKET_EVENTS.md`](docs/SOCKET_EVENTS.md)
 - ✅ **Thought-process sheet** — [`docs/THOUGHT_PROCESS.md`](docs/THOUGHT_PROCESS.md)

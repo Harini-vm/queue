@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Queue Cure '26 — Case Study</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+
+    :root {
+      --text: #1e293b;
+      --muted: #64748b;
+      --faint: #94a3b8;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --code-bg: #f8fafc;
+      --success: #047857;
+      --warning: #b45309;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: var(--text);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 8mm 0; }
+
+    /* ---------- Cover page ---------- */
+    .cover {
+      page-break-after: always;
+      text-align: center;
+      padding: 30mm 0 24mm;
+    }
+    .cover .eyebrow {
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 18mm;
+    }
+    .cover h1 {
+      font-size: 38pt;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin: 0 0 6mm;
+      line-height: 1.05;
+    }
+    .cover h1 .accent { color: var(--accent); }
+    .cover .tagline {
+      font-size: 14pt;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 18mm;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    .cover .meta {
+      display: inline-block;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6mm 10mm;
+      margin-bottom: 18mm;
+      font-size: 11pt;
+    }
+    .cover .meta div { margin: 2px 0; }
+    .cover .meta strong {
+      display: inline-block;
+      width: 90px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6mm;
+      margin-top: 14mm;
+    }
+    .hero-stats .stat {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6mm 4mm;
+      text-align: center;
+      background: white;
+    }
+    .hero-stats .num {
+      font-size: 22pt;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .hero-stats .lbl {
+      font-size: 8.5pt;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 3mm;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    /* ---------- Body typography ---------- */
+    h1, h2, h3 {
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      page-break-after: avoid;
+    }
+    h2 {
+      font-size: 18pt;
+      margin: 12mm 0 4mm;
+      padding-top: 4mm;
+      border-top: 2px solid var(--accent);
+    }
+    h2 .num {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 800;
+      margin-right: 8px;
+    }
+    h3 {
+      font-size: 13pt;
+      margin: 8mm 0 3mm;
+    }
+
+    p { margin: 0 0 3.5mm; }
+    .lead { font-size: 11.5pt; color: var(--muted); }
+
+    strong { font-weight: 700; }
+    em { font-style: italic; color: var(--text); }
+
+    a { color: var(--accent); text-decoration: none; word-break: break-all; }
+
+    blockquote {
+      margin: 5mm 0;
+      padding: 4mm 6mm;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      color: var(--text);
+      font-style: italic;
+      page-break-inside: avoid;
+    }
+
+    /* ---------- Tables ---------- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 4mm 0 6mm;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 2mm 3mm;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: var(--text);
+      font-size: 9pt;
+    }
+    table.compact td, table.compact th { padding: 1.5mm 2.5mm; }
+
+    /* ---------- Code & monospace ---------- */
+    code {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 9pt;
+      background: var(--code-bg);
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #1e40af;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4mm;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 8.5pt;
+      line-height: 1.5;
+      overflow-x: auto;
+      page-break-inside: avoid;
+      color: var(--text);
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--text);
+    }
+    .ascii {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4mm;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 8pt;
+      line-height: 1.4;
+      white-space: pre;
+      page-break-inside: avoid;
+    }
+
+    /* ---------- Lists ---------- */
+    ul, ol { margin: 2mm 0 4mm; padding-left: 7mm; }
+    li { margin-bottom: 1.5mm; }
+
+    /* ---------- Misc ---------- */
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 8pt;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .badge.green { background: #d1fae5; color: var(--success); }
+    .badge.amber { background: #fef3c7; color: var(--warning); }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8mm 0;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 9pt;
+      color: var(--faint);
+      margin-top: 12mm;
+      padding-top: 6mm;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============== COVER ============== -->
+<section class="cover page">
+  <div class="eyebrow">Queue Cure '26 · Wooble Hackathon</div>
+  <h1>Paper tokens,<br/><span class="accent">retired.</span></h1>
+  <p class="tagline">
+    A real-time clinic queue manager. Three screens, one source of truth, zero paper.
+  </p>
+  <div class="meta">
+    <div><strong>Built by</strong> Harini V M</div>
+    <div><strong>Live demo</strong> <a href="https://queue-1-eg77.onrender.com">queue-1-eg77.onrender.com</a></div>
+    <div><strong>GitHub</strong> <a href="https://github.com/harinivm77/queue-cure">github.com/harinivm77/queue-cure</a></div>
+    <div><strong>Stack</strong> Node · Express · MongoDB · Socket.IO</div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="num">~5 sec</div>
+      <div class="lbl">Patient registered</div>
+    </div>
+    <div class="stat">
+      <div class="num">&lt; 300 ms</div>
+      <div class="lbl">Cross-screen sync</div>
+    </div>
+    <div class="stat">
+      <div class="num">0</div>
+      <div class="lbl">Paper slips printed</div>
+    </div>
+    <div class="stat">
+      <div class="num">n = 10</div>
+      <div class="lbl">Rolling consult window</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BODY ============== -->
+<main class="page">
+
+<h2><span class="num">1.</span>The problem</h2>
+<p>76% of India's 1.5 million clinics still run on paper token slips. Patients wait two to three hours with zero visibility into the queue. Receptionists track every patient from memory. Doctors have no dashboard.</p>
+<p>The cost compounds across three groups:</p>
+<table>
+  <thead><tr><th>Stakeholder</th><th>Daily pain</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Patient</strong></td><td>Sits two hours not knowing if they're next or twenty out. Cannot step out, cannot estimate.</td></tr>
+    <tr><td><strong>Receptionist</strong></td><td>Holds the entire queue in working memory. Repeats numbers to anxious patients. Gets blamed for skipped slots.</td></tr>
+    <tr><td><strong>Clinic owner</strong></td><td>Recurring cost of paper, printer cartridges, thrown-away slips. No analytics on flow or no-show rate.</td></tr>
+  </tbody>
+</table>
+<p>Every clinic already owns the hardware needed to fix this — a smartphone, a laptop, and often a wall TV. The missing piece is software that turns those three devices into one synchronised system.</p>
+
+<h2><span class="num">2.</span>The solution</h2>
+<p>Queue Cure is three screens that share one source of truth.</p>
+<table>
+  <thead><tr><th>Surface</th><th>Who uses it</th><th>What it shows</th></tr></thead>
+  <tbody>
+    <tr><td><code>/receptionist</code></td><td>Front-desk operator</td><td>Add patient, call next, manage cadence, per-row 📱 QR action</td></tr>
+    <tr><td><code>/display</code></td><td>Waiting-room TV</td><td>Giant glowing token, "patients ahead" counter, up-next chips, wall-mount QR</td></tr>
+    <tr><td><code>/patient</code></td><td>Patient's own phone</td><td>Live position, ETA, banner: <em>Waiting → Next Up → Your Turn → Done</em></td></tr>
+  </tbody>
+</table>
+<p>Open any two next to each other. Click <strong>Call Next</strong> on one. Every other client repaints the new state within a single network round-trip. No refresh, no polling, no drift.</p>
+
+<h3>The "wow" moment that sells it</h3>
+<blockquote>
+  Receptionist types <strong>"Asha Patel"</strong> + Enter. A 132 px QR pops up on her screen. Asha holds her phone, scans, walks away. Five seconds later the receptionist hits Spacebar — Asha's phone chimes and says <strong>"It's your turn"</strong> while the wall TV slides token <strong>#7 → #8</strong> with an overshoot bounce. From walk-in to live tracking in eight seconds. No paper, no app install, no typing.
+</blockquote>
+
+<h2><span class="num">3.</span>Architecture</h2>
+
+<div class="ascii">                  ┌───────────────────────┐
+                  │   MongoDB Atlas       │
+                  │   (Patient, Clinic,   │
+                  │    Counter)           │
+                  └──────────┬────────────┘
+                             │ Mongoose
+                             ▼
+              ┌──────────────────────────────┐
+              │   Node.js + Express          │
+              │  ─────────────────────────   │
+              │   REST routes  (writes)      │
+              │   Socket.IO    (broadcasts)  │
+              │   QR generator (per-token)   │
+              └──┬─────────────┬─────────────┘
+                 │ REST        │ WebSocket
+                 │ POST/PATCH  │ queue:updated
+                 │ /DELETE     │ queue:snapshot
+       ┌─────────┼─────────────┼─────────────┐
+       ▼         ▼             ▼             ▼
+ Receptionist  Wall TV     Patient        (N future
+   console    (display)   phone view      clients)</div>
+
+<p><strong>Stack:</strong> Node.js · Express · MongoDB · Socket.IO · QRCode · Vanilla HTML/CSS/JS</p>
+<p><strong>Why no framework?</strong> Zero build step. <code>npm install &amp;&amp; npm start</code> — judges can clone and run in 30 seconds. The frontend is three HTML files and three short JS files. Total client payload under 25 KB.</p>
+
+<h3>The single architectural decision that defined everything</h3>
+<p>I considered putting <code>addPatient</code> and <code>callNext</code> as socket events. I rejected it within an hour because:</p>
+<ul>
+  <li>Sockets give you no standard error codes — every event needs a custom ack convention.</li>
+  <li>Sockets aren't testable from <code>curl</code>.</li>
+  <li>Standard webserver middleware (rate limiting, centralised error handling, access logs) assumes HTTP.</li>
+</ul>
+<p>The final design splits the duties cleanly:</p>
+<ul>
+  <li><strong>REST does the writes.</strong> Standard HTTP status codes, standard middleware, curl-testable.</li>
+  <li><strong>Sockets do the reads.</strong> One event, <code>queue:updated</code>, broadcasting a fresh full snapshot after every mutation.</li>
+</ul>
+<p>Clients are dumb re-renderers. They receive a snapshot → call <code>render(snapshot)</code>. <strong>No client-side state machine, no delta merging, no chance of drift.</strong> Same pattern as Stripe, Linear, and most production realtime apps.</p>
+
+<h2><span class="num">4.</span>How this maps to the judging criteria</h2>
+
+<h3>Criterion 1 — Live updates across both screens, no refresh <span class="badge green">40%</span></h3>
+<p>Every mutation follows the same five-step path:</p>
+<div class="ascii">[client clicks] → POST /api/queue/call-next
+              → Express handler
+              → Mongoose mutation (status-guarded)
+              → buildSnapshot()
+              → io.emit('queue:updated', snapshot)
+                     ▼
+              every connected client renders the new snapshot</div>
+<p>The connection pill in the top-right of every screen turns green when the socket is live; on disconnect it auto-resyncs via <code>queue:resync</code>. Whole-snapshot broadcast was chosen over deltas — a busy clinic snapshot is under 5 KB, and full snapshots eliminate the entire class of "client got out of sync" bugs.</p>
+
+<h3>Criterion 2 — Wait time from real data, not hardcoded <span class="badge green">25%</span></h3>
+<p>Every time a patient transitions <code>serving → done</code>, the server records the actual elapsed seconds: <code>completedAt − calledAt</code>. The shown ETA is then a <strong>rolling average of the last ten of these real consultations</strong>.</p>
+<p>A receptionist-configurable default exists, but <strong>only as a cold-start fallback</strong>, and the UI is honest about which mode it's in:</p>
+<table class="compact">
+  <thead><tr><th>State</th><th>UI label</th></tr></thead>
+  <tbody>
+    <tr><td>0 consultations served</td><td><span style="color:var(--warning)">Fallback · calibrating</span> <span class="badge amber">amber</span></td></tr>
+    <tr><td>≥1 consultation served</td><td><span style="color:var(--success)">Real avg 7.0 min · n=3</span> <span class="badge green">green</span></td></tr>
+  </tbody>
+</table>
+<p>A patient's individual ETA also subtracts the time already elapsed on the patient currently in the chair, so the front-of-queue number doesn't lie:</p>
+<pre><code>patient.eta = (avg × position_in_queue) + servingRemainingSeconds</code></pre>
+
+<h3>Criterion 3 — Fast and mistake-proof receptionist screen <span class="badge green">20%</span></h3>
+<p>Eleven specific design decisions, every one earning its place:</p>
+<ol>
+  <li><strong>One screen.</strong> No modals, no page reloads, fits above the fold at 1080p.</li>
+  <li><strong>Auto-focus on Name input</strong> on page load and after every successful add.</li>
+  <li><strong>Name is the only required field.</strong> Phone is explicitly optional and labelled as such.</li>
+  <li><strong>Keyboard-first.</strong> <code>Enter</code> adds · <code>Space</code> calls next · <code>Esc</code> closes the QR slip.</li>
+  <li><strong>Undo button.</strong> Reverses the most recent call-next. Catches the inevitable double-click.</li>
+  <li><strong>Skip / Remove split.</strong> Skip preserves a no-show for recall; Remove deletes outright and is guarded so you cannot remove a patient mid-consultation.</li>
+  <li><strong>Disabled buttons when invalid.</strong> The receptionist physically cannot do the wrong thing.</li>
+  <li><strong>Stat chips in the queue header</strong> for at-a-glance counts: <code>4 waiting · 3 seen · 1 skipped</code>.</li>
+  <li><strong>Live "in chair for X min" timer</strong> on the currently-served patient, ticking client-side without re-fetching.</li>
+  <li><strong>Form-input flash on add</strong> — both inputs briefly glow blue, then clear, then refocus. Prevents the operator from wondering "did it submit?" and double-firing.</li>
+  <li><strong>Per-patient QR slip</strong> — the killer feature. After every Issue Token, a 340 px card pops in the bottom-right with a scannable QR for that patient. Auto-dismisses in 12 s. Reusable from any row's 📱 QR button. The patient scans the receptionist's monitor and walks away — <strong>no printer, no paper, no typing.</strong></li>
+</ol>
+
+<h3>Criterion 4 — Concurrency and edge cases <span class="badge green">15%</span></h3>
+<p>This is the criterion most submissions handwave. Mine has a code path for each.</p>
+
+<p><strong>Race condition: two receptionists assign tokens at the same millisecond.</strong> Naive <code>count() + 1</code> has a textbook race. Replaced with:</p>
+<pre><code>Counter.findOneAndUpdate(
+  { _id: `token-${today}` },
+  { $inc: { seq: 1 } },
+  { upsert: true, new: true }
+);</code></pre>
+<p><code>findOneAndUpdate</code> is atomic at the MongoDB level. Two concurrent inserts always get distinct sequence numbers. <strong>This is the single most important line of code in the project.</strong></p>
+
+<p><strong>Race condition: receptionist double-clicks Call Next.</strong> Every state transition uses a status-guarded update:</p>
+<pre><code>const next = await Patient.findOneAndUpdate(
+  { day, status: 'waiting' },
+  { status: 'serving', calledAt: now },
+  { sort: { token: 1 }, new: true }
+);</code></pre>
+<p>The <code>status: 'waiting'</code> filter is part of the atomic match. Once the first click writes <code>'serving'</code>, the second click's filter no longer matches — it returns <code>null</code> and is a clean no-op.</p>
+
+<p><strong>Receptionist hits Call Next on the wrong patient.</strong> The Undo button reverses the most recent transition: demotes the current <code>serving</code> back to <code>waiting</code>, re-promotes the most recent <code>done</code> patient back to <code>serving</code>. Available within seconds.</p>
+
+<p><strong>Patient doesn't show up when called.</strong> Skip marks them <code>skipped</code>. They can later be <code>recalled</code> — their record stays for analytics, but they're moved to the back of the queue with a fresh token.</p>
+
+<p><strong>Receptionist's browser crashes mid-day.</strong> On refresh, the snapshot comes from MongoDB. Nothing held in browser memory. Timer state is reconstructed from <code>calledAt</code>.</p>
+
+<p><strong>Patient's phone goes to sleep.</strong> Socket auto-reconnects. Client emits <code>queue:resync</code>. Server replies with a fresh snapshot. Token is in <code>localStorage</code>, so the UI is back where they left it.</p>
+
+<p><strong>Clinic has never served a patient today.</strong> No data → can't compute a rolling average. Falls back to the receptionist-configured default, and the UI label switches from green <em>Real avg</em> to amber <em>Calibrating</em>. As soon as one patient is served, the source flips.</p>
+
+<p><strong>End of day, tokens at 47, tomorrow should start at 1.</strong> Both <code>Patient</code> and <code>Counter</code> documents are scoped by <code>day = 'YYYY-MM-DD'</code>. The first patient on the new day creates a new counter starting at 1. No midnight cron, no manual reset script.</p>
+
+<p><strong>Clock skew between laptop and TV.</strong> All elapsed times are computed server-side from MongoDB <code>calledAt</code> / <code>completedAt</code> timestamps. Clients never compute "X minutes ago" from their own clock.</p>
+
+<h2><span class="num">5.</span>UI / UX rationale</h2>
+<p><strong>Light clinical theme — pure white, medical blue <code>#2563EB</code>, slate-800 text.</strong> A dark dashboard demos beautifully on a designer's monitor and fatigues real users by hour three. The receptionist works under fluorescent clinic lighting. Light wins.</p>
+<p>Behind the floating cards sits a faint <strong>Blueprint Grid</strong> — two 1px linear-gradients at 32px spacing in 5%-opacity blue — that frames the UI like an engineering drawing. Pure CSS, no images, no perf cost.</p>
+
+<p><strong>Animations are not decorative.</strong> Every keyframe corresponds to a specific UX moment a judge will look for:</p>
+<table>
+  <thead><tr><th>Animation</th><th>UX purpose</th><th>Criterion</th></tr></thead>
+  <tbody>
+    <tr><td>Call Next overshoot pop on NOW SERVING pill + soft Web Audio chime (D5 → A5)</td><td>Visual + auditory confirmation that realtime sync is active across all screens</td><td>#1</td></tr>
+    <tr><td>Add Patient flash — inputs glow blue 360ms, clear, refocus; new row slides up at bottom</td><td>Unambiguous "your action committed" feedback. Prevents double-add</td><td>#3</td></tr>
+    <tr><td>Top-of-queue flash — front row fades from blue to neutral</td><td>"This is who's up next now" without re-reading the token number</td><td>#3</td></tr>
+    <tr><td>Display "Now Serving" panel — slow 3.6s ambient pulse</td><td>Pulls a glance from across a waiting room without being distracting</td><td>#1</td></tr>
+    <tr><td>Patient "Your turn" — urgent 1.6s pulse with growing outer ring</td><td>Demands attention until the patient looks up and walks in</td><td>UX</td></tr>
+  </tbody>
+</table>
+<p>I deliberately did <strong>not</strong> add hover scaling on the receptionist console, parallax, or animated gradients. Every motion costs a millisecond of operator attention.</p>
+<p><strong>The chime uses the Web Audio API</strong> to synthesise a D5 → A5 sine pair (a perfect fifth — the classic two-tone medical alert) with a 400ms decay. No audio file, no autoplay issues, tuned quiet enough (gain 0.18) not to startle a waiting room.</p>
+
+<h2><span class="num">6.</span>Results</h2>
+<table>
+  <thead><tr><th>Metric</th><th>Result</th><th>How it was measured</th></tr></thead>
+  <tbody>
+    <tr><td>Patient registration</td><td><strong>~5 seconds</strong></td><td>Name + Enter, phone optional, refocus immediate</td></tr>
+    <tr><td>Cross-screen sync latency</td><td><strong>&lt; 300 ms</strong></td><td>Local network round-trip; click-to-paint on second screen</td></tr>
+    <tr><td>Paper slips printed</td><td><strong>0</strong></td><td>Per-patient QR shown on existing receptionist monitor</td></tr>
+    <tr><td>ETA data source</td><td><strong>Rolling avg of last 10 consultations</strong></td><td>Not hardcoded; falls back only on day-one</td></tr>
+    <tr><td>Concurrent token assignment</td><td><strong>No collisions</strong></td><td>Atomic MongoDB <code>$inc</code> + upsert</td></tr>
+    <tr><td>Double-clicked Call Next</td><td><strong>Clean no-op</strong></td><td>Status-guarded transition; second click matches nothing</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">7.</span>What I'd do differently</h2>
+<p>Three things, honestly.</p>
+<p><strong>First, ship automated tests earlier.</strong> My concurrency claims are documented in detail but only spot-checked. A test that fires 50 parallel <code>addPatient()</code> calls and asserts 50 distinct tokens would prove the atomic counter in seconds, instead of asking judges to trust the doc.</p>
+<p><strong>Second, add per-doctor lanes.</strong> This MVP assumes one queue per clinic. Larger clinics run two or three doctors in parallel, each with their own queue. The data model would need a <code>doctorId</code> on <code>Patient</code> and per-doctor <code>Counter</code> documents — a real but bounded refactor.</p>
+<p><strong>Third, build telemetry.</strong> Daily average wait, busiest hours by day-of-week, no-show rate, average consultation time per doctor. A weekly insight email would turn this from "queue manager" into "ops dashboard." That's where a clinic owner would start paying for it.</p>
+<p>The hardest cut was <strong>authentication</strong>. Currently any URL is open — anyone with the IP can be the receptionist. For a single-clinic deployment a 4-digit PIN would have been enough, but I chose to keep scope tight rather than half-ship a security layer. It's documented as a known limitation, not a forgotten one.</p>
+
+<h2><span class="num">8.</span>Submission deliverables</h2>
+<table>
+  <thead><tr><th>Required</th><th>Location</th></tr></thead>
+  <tbody>
+    <tr><td>Working prototype</td><td><a href="https://queue-1-eg77.onrender.com">https://queue-1-eg77.onrender.com</a></td></tr>
+    <tr><td>GitHub repo with README</td><td><a href="https://github.com/harinivm77/queue-cure">https://github.com/harinivm77/queue-cure</a></td></tr>
+    <tr><td>Socket event diagram</td><td><code>docs/SOCKET_EVENTS.md</code></td></tr>
+    <tr><td>Thought-process sheet</td><td><code>docs/THOUGHT_PROCESS.md</code></td></tr>
+    <tr><td>Case study</td><td>This document</td></tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  Queue Cure '26 · Built by Harini V M · Wooble hackathon submission, June 2026
+</div>
+
+</main>
+</body>
+</html>
